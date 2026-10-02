@@ -1,20 +1,74 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="dice-content">
+  <div
+    class="screen-canvas"
+    (dblclick)="roll()"
+    (touchend)="onTouchEnd($event)"
+  >
+    <div class="dice-stage">
+      <div
+        class="dice"
+        [class.rolling]="isRolling()"
+        [attr.data-value]="diceValue()"
+        (click)="roll()"
+      >
+        <span class="dot dot-tl"></span>
+        <span class="dot dot-tr"></span>
+        <span class="dot dot-ml"></span>
+        <span class="dot dot-c"></span>
+        <span class="dot dot-mr"></span>
+        <span class="dot dot-bl"></span>
+        <span class="dot dot-br"></span>
+      </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+      <div class="dice-shadow"></div>
+    </div>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+    <div class="accel-panel" (dblclick)="$event.stopPropagation()">
+      <div class="accel-header">
+        <span class="accel-title">accel</span>
+        <div class="accel-readouts">
+          <span class="axis-pill" [class.active]="accelX() !== 0">x: {{ accelX() }}</span>
+          <span class="axis-pill" [class.active]="accelY() !== 0">y: {{ accelY() }}</span>
+        </div>
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>X Axis</span>
+          <span class="val">{{ accelX() }}</span>
+        </div>
+        <input
+          type="range"
+          min="-15"
+          max="15"
+          step="0.5"
+          [value]="accelX()"
+          (input)="onSliderInput('x', $event)"
+          (change)="onSliderRelease('x', $event)"
+          (mouseup)="onSliderRelease('x', $event)"
+          (touchend)="onSliderRelease('x', $event)"
+          class="accel-slider"
+        />
+      </div>
+
+      <div class="slider-group">
+        <div class="slider-label">
+          <span>Y Axis</span>
+          <span class="val">{{ accelY() }}</span>
+        </div>
+        <input
+          type="range"
+          min="-15"
+          max="15"
+          step="0.5"
+          [value]="accelY()"
+          (input)="onSliderInput('y', $event)"
+          (change)="onSliderRelease('y', $event)"
+          (mouseup)="onSliderRelease('y', $event)"
+          (touchend)="onSliderRelease('y', $event)"
+          class="accel-slider"
+        />
+      </div>
+    </div>
   </div>
 </ion-content>
