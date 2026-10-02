@@ -1,0 +1,7 @@
+{
+  "name": "dice",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
